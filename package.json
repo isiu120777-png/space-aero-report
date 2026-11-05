@@ -1,0 +1,36 @@
+{
+  "name": "space_aero_report",
+  "version": "1.0.0",
+  "description": "2026학년도 책만세 최종 보고서 - 하늘에서 우주로 (Sky to Cosmos)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'Static assets ready for deployment'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "server.js",
+      "package.json"
+    ],
+    "ext": "js,json"
+  },
+  "keywords": [
+    "express",
+    "book-report",
+    "aviation",
+    "astronomy"
+  ],
+  "author": "10507 박지오, 10711 이시우, 10712 이시헌",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^10.14.0",
+    "nodemon": "^3.1.14"
+  }
+}

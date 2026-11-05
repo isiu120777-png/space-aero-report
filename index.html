@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026학년도 책만세 최종 보고서 | 하늘에서 우주로 (Sky to Cosmos)</title>
+  <meta name="description" content="조종사가 들려주는 비행이야기와 천문학자는 별을 보지 않는다를 바탕으로 한 항공·천문 융합 독서 탐구 보고서">
+  
+  <!-- Pretendard Web Font CDN (Fallback to system fonts) -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="./css/style.css">
+
+  <!-- CDN: Three.js (r128) & Anime.js (3.2.1) - No local installation required -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+  <!-- Scroll Progress Indicator with Neon Glow -->
+  <div class="scroll-progress"></div>
+
+  <!-- 3D WebGL Three.js Cosmic & Stratospheric Canvas Layer -->
+  <div id="webgl-canvas-container"></div>
+
+  <div class="content-wrapper">
+    <!-- Navigation Bar -->
+    <header class="navbar">
+      <div class="container nav-container">
+        <div class="nav-logo">
+          <span>🚀 SKY TO COSMOS</span>
+          <span class="badge-tag">2026 책만세</span>
+        </div>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#overview" class="nav-link">개요</a></li>
+            <li><a href="#aviation" class="nav-link" style="color: var(--aero-primary);">✈️ 항공 분야</a></li>
+            <li><a href="#astronomy" class="nav-link" style="color: var(--astro-primary);">🔭 천문 분야</a></li>
+            <li><a href="#convergence" class="nav-link" style="color: #f59e0b;">⚖️ 융합 토론</a></li>
+            <li><a href="#members" class="nav-link">👥 모둠 성찰</a></li>
+            <li><a href="#gallery" class="nav-link">📸 활동 갤러리</a></li>
+          </ul>
+        </nav>
+        <div class="nav-actions">
+          <!-- Procedural Web Audio Ambient Synth Toggle -->
+          <button id="audio-ambient-btn" class="icon-btn audio-btn" title="우주 앰비언트 사운드 켜기 (Play)" aria-label="사운드 토글">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+          </button>
+          <button id="theme-toggle-btn" class="icon-btn" title="테마 전환" aria-label="테마 전환">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </button>
+          <button class="icon-btn" onclick="window.print()" title="보고서 인쇄 / PDF 저장" aria-label="보고서 인쇄">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          </button>
+          <button class="icon-btn mobile-menu-btn" aria-label="메뉴 열기">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Drawer Nav -->
+    <div class="mobile-nav">
+      <a href="#overview">📖 프로젝트 개요</a>
+      <a href="#aviation" style="color: var(--aero-primary);">✈️ 항공 분야 (비행이야기)</a>
+      <a href="#astronomy" style="color: var(--astro-primary);">🔭 천문 분야 (별을 보지 않는다)</a>
+      <a href="#convergence" style="color: #f59e0b;">⚖️ 융합 심층 토론 (경험과 기술)</a>
+      <a href="#members">👥 모둠원 3인 성찰 & 로드맵</a>
+      <a href="#gallery">📸 활동 사진 및 보고서 정보</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <!-- Sci-Fi HUD Telemetry Strip -->
+        <div class="hero-hud-telemetry">
+          <span><span class="status-dot"></span>SYS: FLIGHT & OBSERVATION ACTIVE</span>
+          <span>ALT: 38,000 FT (STRATOSPHERE)</span>
+          <span>TARGET: CELESTIAL DEEP SPACE</span>
+          <span>RENDERER: THREE.JS WEBGL</span>
+        </div>
+
+        <div class="hero-badge-wrap">
+          <span class="pulse-dot"></span>
+          <span>2026학년도 책만세(책으로 만드는 세상) 최종 보고서</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="gradient-text-aero">하늘을 나는 지혜,</span><br>
+          <span class="gradient-text-astro">우주를 읽는 시선</span>
+        </h1>
+        <p class="hero-subtitle">
+          항공기의 치열한 안전과 시스템 공학에서, 천문학의 광활한 침묵과 데이터의 탐구까지.<br>
+          하늘이라는 공통된 공간을 마주한 1학년 3인의 독서 융합 탐구 프로젝트
+        </p>
+
+        <!-- Two Domain Pillars -->
+        <div class="hero-duo-cards">
+          <!-- Aviation Pillar -->
+          <div class="pillar-card aero-pillar" onclick="document.querySelector('.filter-btn[data-filter=\'aero\']').click()">
+            <div class="pillar-icon-wrap">✈️</div>
+            <span class="pillar-badge">Aviation Domain</span>
+            <h3 class="pillar-title">항공 분야 탐구</h3>
+            <div class="pillar-book">《조종사가 들려주는 비행이야기》 노명환 저</div>
+            <p class="pillar-desc">
+              생명을 책임지는 엄격한 운항 절차와 복합 항공 시스템, 그리고 인공지능 자율 비행 시대에 맞서는 인간 조종사의 경험과 판단력을 탐구합니다.
+            </p>
+            <div class="pillar-tags">
+              <span>#비행역학</span>
+              <span>#운항안전절차</span>
+              <span>#AI무인비행</span>
+              <span>#조종사의직관</span>
+            </div>
+          </div>
+
+          <!-- Astronomy Pillar -->
+          <div class="pillar-card astro-pillar" onclick="document.querySelector('.filter-btn[data-filter=\'astro\']').click()">
+            <div class="pillar-icon-wrap">🔭</div>
+            <span class="pillar-badge">Astronomy Domain</span>
+            <h3 class="pillar-title">천문 분야 탐구</h3>
+            <div class="pillar-book">《천문학자는 별을 보지 않는다》 심채경 저</div>
+            <p class="pillar-desc">
+              단순한 낭만을 넘어 방대한 관측 데이터를 분석하고, 우주를 알아갈수록 끝없이 확장되는 미지의 영역을 대하는 과학자의 태도를 성찰합니다.
+            </p>
+            <div class="pillar-tags">
+              <span>#관측데이터분석</span>
+              <span>#별의진화</span>
+              <span>#암흑물질</span>
+              <span>#과학자의태도</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating Sticky Domain Filter Bar (Linked to 3D Camera Swoop) -->
+    <div class="filter-bar-sticky">
+      <div class="filter-pills">
+        <button class="filter-btn active" data-filter="all">🌐 전체 뷰 (Orbit)</button>
+        <button class="filter-btn" data-filter="aero">✈️ 항공 분야 (Stratosphere)</button>
+        <button class="filter-btn" data-filter="astro">🔭 천문 분야 (Deep Cosmos)</button>
+        <button class="filter-btn" data-filter="convergence">⚖️ 융합 심층 토론 (Nexus)</button>
+        <button class="filter-btn" data-filter="members">👥 개인별 성찰</button>
+      </div>
+    </div>
+
+    <!-- Section 1: Overview & Book Selection -->
+    <section id="overview" class="section" data-category="all">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag members">Overview & Motivation</span>
+          <h2 class="section-title">독서 탐구 기획 및 도서 선정 이유</h2>
+          <p class="section-subtitle">하늘과 우주라는 무대에서 과학적 원리와 인간의 사명을 잇다</p>
+        </div>
+
+        <div class="glass-card" style="margin-bottom: 30px;">
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            ③ 도서 선정 이유 전문 (Report Original)
+          </h3>
+          <p style="font-size: 1.05rem; line-height: 1.85; color: var(--text-main); padding-left: 20px; border-left: 3px solid #38bdf8;">
+            "평소 항공기의 비행 원리와 광활한 우주에 존재하는 별과 행성에 관심이 많았다. 특히 항공기가 어떤 과학적 원리를 바탕으로 비행하는지, 우주를 연구하는 천문학자들은 어떤 방식으로 천체를 관찰하고 연구하는지 궁금했다. 이러한 궁금증을 해결하고 항공과 천문학에 대한 이해를 넓히기 위해 《조종사가 들려주는 비행이야기》와 《천문학자는 별을 보지 않는다》를 선정하여 읽게 되었다."
+          </p>
+        </div>
+
+        <!-- Team Roles Grid -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+          <div class="glass-card" style="padding: 24px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <strong style="font-size: 1.15rem; color: var(--text-main);">10507 박지오</strong>
+              <span style="font-size: 0.75rem; background: rgba(59, 130, 246, 0.2); color: #60a5fa; padding: 3px 8px; border-radius: 4px; font-weight: 700;">모둠원</span>
+            </div>
+            <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;"><strong>담당 역할:</strong> 발제, 기록, 자료조사</div>
+            <div style="font-size: 0.84rem; color: var(--text-dim); line-height: 1.55;">기내 난동 대응과 승객 안전 매뉴얼을 희망 진로인 '경찰'의 위기 판단력과 연결하여 탐구</div>
+          </div>
+
+          <div class="glass-card" style="padding: 24px; border-color: rgba(168, 85, 247, 0.35);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <strong style="font-size: 1.15rem; color: var(--text-main);">10711 이시우</strong>
+              <span style="font-size: 0.75rem; background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 3px 8px; border-radius: 4px; font-weight: 700;">모둠원</span>
+            </div>
+            <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;"><strong>담당 역할:</strong> 발제, 기록, AI 바이브 코딩</div>
+            <div style="font-size: 0.84rem; color: var(--text-dim); line-height: 1.55;">천문학자의 데이터 분석 태도와 항성 진화/분광형 탐구를 AI 바이브 코딩과 Three.js 3D로 구현</div>
+          </div>
+
+          <div class="glass-card" style="padding: 24px; border-color: rgba(0, 210, 255, 0.35);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <strong style="font-size: 1.15rem; color: var(--text-main);">10712 이시헌</strong>
+              <span style="font-size: 0.75rem; background: rgba(0, 210, 255, 0.25); color: #38bdf8; padding: 3px 8px; border-radius: 4px; font-weight: 700;">모둠원</span>
+            </div>
+            <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;"><strong>담당 역할:</strong> 발제, 기록, 보고서 작성</div>
+            <div style="font-size: 0.84rem; color: var(--text-dim); line-height: 1.55;">항공기를 복합 시스템으로 규명하고 오토파일럿과 미래 조종사의 인간-기술 협력 관계를 분석</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         Section 2: ✈️ 항공 분야 (Aviation Domain)
+         ========================================================= -->
+    <section id="aviation" class="section" data-category="aero all">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag aero">Aviation Exploration</span>
+          <h2 class="section-title">✈️ 항공 분야 탐구: 하늘을 움직이는 거대한 시스템</h2>
+          <p class="section-subtitle">
+            《조종사가 들려주는 비행이야기》를 바탕으로 비행 원리와 조종사의 책임, 그리고 미래 무인 비행의 가능성을 토론합니다.
+          </p>
+        </div>
+
+        <!-- Book Feature Card: Aviation -->
+        <div class="book-feature-card aero-domain-card">
+          <div class="book-visual">
+            <span class="book-spine-badge">Aviation Essential</span>
+            <h4 class="book-mockup-title">조종사가 들려주는<br>비행이야기</h4>
+            <span class="book-mockup-author">노명환 저 · 북랩 (2023)</span>
+          </div>
+          <div class="book-info-body">
+            <div class="book-meta-strip">
+              <span><strong>저자:</strong> 노명환</span>
+              <span><strong>출판사:</strong> 북랩 (2023년)</span>
+              <span><strong>핵심 분야:</strong> 항공운항학, 비행역학, 항공안전</span>
+            </div>
+            <blockquote class="book-quote">
+              "조종사의 실제 경험을 바탕으로 비행과 항공에 관한 이야기를 들려주는 책이다. 비행기가 나는 원리와 조종사의 역할, 비행 중 일어나는 다양한 상황을 쉽게 설명한다. 이 책을 통해 항공 지식을 배우고 조종사라는 직업을 깊이 이해할 수 있다."
+            </blockquote>
+            <div class="book-tags-list">
+              <span>양력과 공기역학</span>
+              <span>체크리스트와 엄격한 절차</span>
+              <span>기상 변화와 위기 판단</span>
+              <span>조종실(Cockpit) 협업</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Debates in Aviation -->
+        <h3 style="font-size: 1.45rem; font-weight: 800; margin-bottom: 26px; color: var(--aero-primary); display: flex; align-items: center; gap: 10px;">
+          <span>🎯 항공 분야 핵심 쟁점 토론 (1·2차 활동)</span>
+        </h3>
+
+        <div class="debates-grid">
+          <!-- Debate Round 1 -->
+          <div class="debate-card">
+            <div class="debate-header">
+              <span class="debate-round-badge round-aero">1회차 활동 토론</span>
+              <h4 class="debate-question">"비행기 운항 과정에는 복잡한 절차가 꼭 필요할까?"</h4>
+            </div>
+
+            <div class="opinion-split">
+              <!-- Pro Box -->
+              <div class="opinion-box pro">
+                <div class="opinion-title">
+                  <span>✅ 찬성 (엄격한 절차 필수론)</span>
+                  <span>안전 최우선</span>
+                </div>
+                <div class="opinion-body">
+                  "비행기를 운항할 때에는 매우 복잡하고 디테일한 과정이 필수적이라고 생각한다. 비행기는 수많은 사람들의 생명을 책임지는 만큼 작은 실수라도 큰 사고로 이어질 수 있기 때문이다. 그래서 이륙하기 전에 기체를 점검하고, 기상을 확인하며, 관제탑과 교신하는 등 모든 과정이 매우 엄격하게 이루어져야 한다고 생각한다. 이런 과정은 사고를 예방하고 안전성을 높여주는 매우 중요한 역할을 하기 때문에 필수적이라고 생각한다."
+                </div>
+              </div>
+
+              <!-- Con Box -->
+              <div class="opinion-box con">
+                <div class="opinion-title">
+                  <span>❌ 반대 (절차 간소화 및 기술 대체론)</span>
+                  <span>효율과 유연성</span>
+                </div>
+                <div class="opinion-body">
+                  "비행기 운항에는 안전을 위한 절차가 필요하지만, 모든 과정이 지나치게 복잡할 필요는 없다고 생각한다. 절차가 너무 많아지면 조종사와 항공 종사자의 업무 부담이 커지고 긴급 상황에서의 판단이 어려워질 수 있다. 또한 인공지능과 자동화 기술을 이용하면 몇몇 업무를 줄일 수 있다. 따라서 안전에 중요한 절차는 유지하되 불필요한 것이나 중복된 것은 줄여야 한다고 생각한다."
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Voting Bar -->
+            <div class="vote-interactive-bar" data-debate-id="round1">
+              <span class="vote-prompt">💡 여러분의 의견은 어떠신가요? 직접 투표해보세요:</span>
+              <div class="vote-actions">
+                <button class="vote-btn pro-btn">찬성 (철저한 절차)</button>
+                <button class="vote-btn con-btn">반대 (절차 간소화)</button>
+              </div>
+              <div class="vote-stats"></div>
+            </div>
+          </div>
+
+          <!-- Debate Round 2 -->
+          <div class="debate-card">
+            <div class="debate-header">
+              <span class="debate-round-badge round-aero">2회차 활동 토론</span>
+              <h4 class="debate-question">“미래에는 조종사 없이 비행기가 운항할 수 있을까?”</h4>
+            </div>
+
+            <div class="opinion-split">
+              <!-- Pro Box -->
+              <div class="opinion-box pro">
+                <div class="opinion-title">
+                  <span>✅ 찬성 (완전 무인 자율비행 긍정)</span>
+                  <span>AI의 무피로·정밀성</span>
+                </div>
+                <div class="opinion-body">
+                  "미래에는 인공지능이 조종사 없이 비행기를 운항하는 것이 더 효율적이고 안전할 것이라고 생각한다. 인간 조종사는 피로와 긴장으로 실수할 수 있지만, 인공지능은 피로 없이 방대한 데이터를 분석해 일정한 판단을 내릴 수 있다. 또한 기상 상황과 비행 경로를 분석해 연료 소비와 운항 비용을 줄일 수 있다. 따라서 기술의 안전성이 충분히 검증된다면 조종사 없는 운항은 항공 산업의 효율적인 변화가 될 것이다."
+                </div>
+              </div>
+
+              <!-- Con Box -->
+              <div class="opinion-box con">
+                <div class="opinion-title">
+                  <span>❌ 반대 (인간 조종사 필수 탑승론)</span>
+                  <span>돌발 위기 대응 & 최종 책임</span>
+                </div>
+                <div class="opinion-body">
+                  "미래에도 비행기에 인간 조종사가 타야한다고 생각한다. 항공기 운항중에 갑자기 기상이 변하거나, 기체에 결함이 생기는 등 생각지도 못한 상황이 일어날 수 있다. 이때 조종사의 경험과 판단이 중요하다. 또 AI 시스템에 문제가 생기면 큰 사고가 날 수 있고, 사고가 났을 때 누구의 잘못인지도 알 수 없게 된다. 그래서 항공 안전을 위해서는 마지막으로 판단하고 책임질 수 있는 인간 조종사가 있어야 한다."
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Voting Bar -->
+            <div class="vote-interactive-bar" data-debate-id="round2">
+              <span class="vote-prompt">💡 AI 자율 비행에 대한 생각은?</span>
+              <div class="vote-actions">
+                <button class="vote-btn pro-btn">찬성 (AI 무인비행)</button>
+                <button class="vote-btn con-btn">반대 (인간 조종사 필수)</button>
+              </div>
+              <div class="vote-stats"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Module: Flight Dynamics 4 Forces -->
+        <div class="interactive-widget-box" style="border-color: var(--aero-border);">
+          <div class="widget-header">
+            <h4 class="widget-title" style="color: var(--aero-primary);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              항공 역학 인포그래픽: 비행기를 하늘에 띄우는 4가지 힘
+            </h4>
+            <span style="font-size: 0.82rem; color: var(--text-dim);">이시헌 모둠원의 항공 원리 탐구 연계</span>
+          </div>
+          <div class="flight-dynamics-grid">
+            <div class="force-card">
+              <div class="force-icon">⬆️</div>
+              <div class="force-name">양력 (Lift)</div>
+              <p class="force-desc">날개 위아래의 압력 차이(베르누이 정리)로 발생하여 비행기를 위로 들어 올리는 힘</p>
+            </div>
+            <div class="force-card">
+              <div class="force-icon">⬇️</div>
+              <div class="force-name">중력 (Weight)</div>
+              <p class="force-desc">지구가 기체와 탑승객을 끌어당기는 지구 중력. 양력과의 균형이 고도 유지의 핵심</p>
+            </div>
+            <div class="force-card">
+              <div class="force-icon">➡️</div>
+              <div class="force-name">추력 (Thrust)</div>
+              <p class="force-desc">제트 엔진이나 프로펠러가 공기를 밀어내며 비행기를 앞으로 전진시키는 추진력</p>
+            </div>
+            <div class="force-card">
+              <div class="force-icon">⬅️</div>
+              <div class="force-name">항력 (Drag)</div>
+              <p class="force-desc">공기와의 마찰과 압력 저항으로 인해 전진을 방해하는 힘. 유선형 설계로 최소화</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         Section 3: 🔭 천문 분야 (Astronomy Domain)
+         ========================================================= -->
+    <section id="astronomy" class="section" data-category="astro all">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag astro">Astronomy Exploration</span>
+          <h2 class="section-title">🔭 천문 분야 탐구: 별을 넘어 데이터를 마주하는 과학</h2>
+          <p class="section-subtitle">
+            《천문학자는 별을 보지 않는다》를 통해 낭만적 별보기를 넘어선 끈기 있는 연구와 미지의 우주를 대하는 태도를 탐구합니다.
+          </p>
+        </div>
+
+        <!-- Book Feature Card: Astronomy -->
+        <div class="book-feature-card astro-domain-card">
+          <div class="book-visual">
+            <span class="book-spine-badge">Astronomy Essay</span>
+            <h4 class="book-mockup-title">천문학자는<br>별을 보지 않는다</h4>
+            <span class="book-mockup-author">심채경 저 · 문학동네 (2021)</span>
+          </div>
+          <div class="book-info-body">
+            <div class="book-meta-strip">
+              <span><strong>저자:</strong> 심채경</span>
+              <span><strong>출판사:</strong> 문학동네 (2021년)</span>
+              <span><strong>핵심 분야:</strong> 행성과학, 천체물리학, 과학자의 삶과 태도</span>
+            </div>
+            <blockquote class="book-quote">
+              "작가 자신의 연구 경험과 일상을 바탕으로 천문학자의 삶을 풀어낸 에세이다. 우주와 행성에 관한 과학적 지식뿐만 아니라 연구 과정에서 겪는 고민과 과학자로서의 태도, 일상 속에서 발견하는 과학의 의미를 이야기한다. 이를 통해 우리가 무심코 지나치는 세상도 과학자의 관점으로 바라보면 새로운 의미를 발견할 수 있다는 것을 보여준다."
+            </blockquote>
+            <div class="book-tags-list">
+              <span>관측 자료와 코드 분석</span>
+              <span>오랜 기다림과 끈기</span>
+              <span>우주의 광활함과 겸손</span>
+              <span>질문하는 과학자의 태도</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Debates in Astronomy -->
+        <h3 style="font-size: 1.45rem; font-weight: 800; margin-bottom: 26px; color: var(--astro-primary); display: flex; align-items: center; gap: 10px;">
+          <span>🌌 천문 분야 핵심 쟁점 토론 (3회차 활동)</span>
+        </h3>
+
+        <div class="debates-grid">
+          <!-- Debate Round 3 -->
+          <div class="debate-card">
+            <div class="debate-header">
+              <span class="debate-round-badge round-astro">3회차 활동 토론</span>
+              <h4 class="debate-question">"인간은 우주를 이해할수록 우주에 대해 더 많이 아는 것인가, 아니면 모르는 것이 더 많다는 사실인가?"</h4>
+            </div>
+
+            <div class="opinion-split">
+              <!-- Pro Box -->
+              <div class="opinion-box pro">
+                <div class="opinion-title">
+                  <span>✅ 찬성 (지식의 심화와 확장)</span>
+                  <span>앎의 지평 확대</span>
+                </div>
+                <div class="opinion-body">
+                  "새로운 발견을 통해 인간은 우주에 대한 지식을 넓혀가고 있다. 이전에는 알 수 없었던 행성이나 은하, 수많은 천체 현상들을 관측기술의 발전으로 발견할 수 있게 되었다. 그리고 천문학은 단순히 별과 행성의 운동을 관측하는 수준을 넘어 중력의 법칙이나 별의 탄생과 진화 등 우주의 원리를 설명하는 방향으로 발전해 왔다. 이는 인간이 우주에 대해 보다 깊이 이해하게 되었다는 것을 의미한다. 더 나아가 새로운 연구를 통해 이전에는 알 수 없었던 문제를 발견하는 것 역시 지식의 발전이라고 볼 수 있다. 따라서 인간은 우주를 탐구할수록 더 많은 사실을 알아가고 있으며, 우주에 대한 이해도 점점 깊어지고 있다고 생각한다."
+                </div>
+              </div>
+
+              <!-- Con Box -->
+              <div class="opinion-box con">
+                <div class="opinion-title">
+                  <span>❌ 반대 (미지의 자각과 한계 인정)</span>
+                  <span>지평선 너머의 겸손</span>
+                </div>
+                <div class="opinion-body">
+                  "새로운 사실을 발견할 때마다 인간은 또 다른 의문과 미지의 영역을 마주하게 된다. 하나의 문제를 해결하더라도 그와 관련된 새로운 질문이 생기기 때문에 인간이 모르는 영역은 계속 드러난다. 그리고 암흑물질과 암흑에너지처럼 존재와 영향에 대한 근거는 있지만 정확한 정체를 밝혀내지 못한 대상도 있다. 이는 인간이 아직 우주의 많은 부분을 이해하지 못하고 있다는 것을 보여준다. 더불어 인간의 관측 기술과 능력에는 한계가 있기 때문에 아무리 과학이 발전하더라도 우주 전체를 완벽하게 이해하기는 어렵다. 따라서 천문학의 발전은 단순히 새로운 지식을 얻는 과정일 뿐만 아니라 인간이 얼마나 많은 것을 모르고 있는지 깨닫는 과정이라고 생각한다."
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Voting Bar -->
+            <div class="vote-interactive-bar" data-debate-id="round3">
+              <span class="vote-prompt">💡 여러분은 우주에 대해 어떻게 생각하시나요?</span>
+              <div class="vote-actions">
+                <button class="vote-btn pro-btn">더 많이 알아간다</button>
+                <button class="vote-btn con-btn">모르는 것이 드러난다</button>
+              </div>
+              <div class="vote-stats"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Module: Stellar Spectra Explorer -->
+        <div class="interactive-widget-box" style="border-color: var(--astro-border);">
+          <div class="widget-header">
+            <h4 class="widget-title" style="color: var(--astro-primary);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              항성 분광형(O-B-A-F-G-K-M) 탐색기: 별의 색깔과 표면 온도
+            </h4>
+            <span style="font-size: 0.82rem; color: var(--text-dim);">이시우 모둠원의 후속 탐구 주제 시각화</span>
+          </div>
+
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 18px;">
+            항성을 클릭하여 표면 온도, 색깔, 수명 및 진화 경로를 인터랙티브하게 확인해보세요:
+          </p>
+
+          <div class="spectral-stars-grid">
+            <div class="spectral-card" data-type="O">
+              <div class="star-orb" style="background: #4fc3f7; color: #4fc3f7;"></div>
+              <div class="spectral-type">O형</div>
+              <div class="spectral-temp">&gt; 30,000K</div>
+            </div>
+            <div class="spectral-card" data-type="B">
+              <div class="star-orb" style="background: #81d4fa; color: #81d4fa;"></div>
+              <div class="spectral-type">B형</div>
+              <div class="spectral-temp">10k~30k K</div>
+            </div>
+            <div class="spectral-card" data-type="A">
+              <div class="star-orb" style="background: #ffffff; color: #ffffff;"></div>
+              <div class="spectral-type">A형</div>
+              <div class="spectral-temp">7.5k~10k K</div>
+            </div>
+            <div class="spectral-card" data-type="F">
+              <div class="star-orb" style="background: #fff9c4; color: #fff9c4;"></div>
+              <div class="spectral-type">F형</div>
+              <div class="spectral-temp">6k~7.5k K</div>
+            </div>
+            <div class="spectral-card active" data-type="G">
+              <div class="star-orb" style="background: #ffeb3b; color: #ffeb3b;"></div>
+              <div class="spectral-type">G형 (태양)</div>
+              <div class="spectral-temp">5.2k~6k K</div>
+            </div>
+            <div class="spectral-card" data-type="K">
+              <div class="star-orb" style="background: #ffb74d; color: #ffb74d;"></div>
+              <div class="spectral-type">K형</div>
+              <div class="spectral-temp">3.7k~5.2k K</div>
+            </div>
+            <div class="spectral-card" data-type="M">
+              <div class="star-orb" style="background: #e57373; color: #e57373;"></div>
+              <div class="spectral-type">M형</div>
+              <div class="spectral-temp">2.4k~3.7k K</div>
+            </div>
+          </div>
+
+          <div id="spectral-detail" class="spectral-detail-display">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+              <span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#ffeb3b; box-shadow:0 0 10px #ffeb3b;"></span>
+              <strong style="font-size:1.05rem; color:var(--text-main);">G형 (황색 왜성 - 태양형)</strong>
+              <span style="font-size:0.8rem; background:rgba(255,255,255,0.08); padding:2px 8px; border-radius:4px; font-family:var(--font-mono);">5,200K ~ 6,000K</span>
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">
+              <strong style="color:var(--text-main);">대표 천체:</strong> 우리 태양 (Sun), 센타우루스자리 알파 A
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-main); line-height:1.6;">우리 인류가 살고 있는 지구를 품은 태양과 같은 유형입니다. 약 100억 년의 긴 주계열 수명을 가지며 적색거성을 거쳐 백색왜성으로 일생을 마칩니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         Section 4: ⚖️ 융합 심층 토론 (Convergence Debate)
+         ========================================================= -->
+    <section id="convergence" class="section" data-category="convergence all">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag convergence">Convergence Arena</span>
+          <h2 class="section-title">⚖️ 융합 심층 토론: 항공과 천문이 만나는 교차점</h2>
+          <p class="section-subtitle">
+            ⑤ 전체 토론 주제와 내용: "과학기술이 발전할수록 인간의 경험과 직관은 덜 중요해질까?"
+          </p>
+        </div>
+
+        <div class="convergence-card">
+          <div class="convergence-thesis-box">
+            <div class="thesis-tag">Integrated In-Depth Thesis</div>
+            <div class="thesis-text">"과학기술이 발전할수록 인간의 경험과 직관은 덜 중요해질까?"</div>
+          </div>
+
+          <div class="convergence-arguments">
+            <!-- Position A -->
+            <div class="arg-card tech-heavy">
+              <span class="arg-badge">입장 A · 덜 중요해질 것이다</span>
+              <h4 class="arg-title">고정밀 데이터와 AI 시스템의 우위</h4>
+              <p class="arg-body">
+                "과학기술이 발달할수록 인간의 경험과 직관이 차지하는 비중은 점점 줄어들 것이다. 인공지능과 고정밀 측정 장비는 인간이 놓칠 수 있는 정보들을 빠르고 정확하게 분석할 수 있다. 항공 분야에서 자동 비행 시스템이 조종사의 업무를 대신하고 있고, 천문학에서는 최첨단 망원경과 컴퓨터 분석 기술을 이용해 인간이 직접 관측하기 어려운 천체까지 연구하고 있다. 그래서 기술이 더 발전한다면 인간의 경험과 직관에 의존하는 상황은 점점 줄어들 것이다."
+              </p>
+              <div class="arg-subpoints">
+                <div class="arg-point-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00d2ff" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  <span><strong>항공 사례:</strong> 오토파일럿, 관제 AI 및 정밀 항법의 고도화로 인한 인적 오류(Human Error) 최소화</span>
+                </div>
+                <div class="arg-point-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00d2ff" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  <span><strong>천문 사례:</strong> 제임스 웹 등 우주망원경의 테라바이트급 관측 데이터 머신러닝 자동 필터링</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Position B -->
+            <div class="arg-card human-centric">
+              <span class="arg-badge">입장 B · 여전히 중요하다</span>
+              <h4 class="arg-title">위기 돌발 상황과 해석의 인간 직관</h4>
+              <p class="arg-body">
+                "과학기술이 발전해도 인간의 경험과 직관은 여전히 중요하다. 기술은 많은 정보를 분석하고 정확한 결과를 알려줄 수 있지만, 예상하지 못한 상황에서 마지막으로 판단을 내리는 데에는 인간의 경험이 필요하다. 항공 분야에서 갑자기 기상이 변하거나 시스템이 오류가 났을 때 대처하기 위해 조종사의 판단력이 중요하다. 천문학에서도 관측한 결과를 해석하고 새로운 연구 방향을 정하는 것은 과학자가 하는 일이다. 그래서 기술은 인간의 능력을 보완하는 도구일 뿐, 경험과 직관을 완전히 대체할 수 없다."
+              </p>
+              <div class="arg-subpoints">
+                <div class="arg-point-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  <span><strong>항공 사례:</strong> 센서 고장이나 버드스트라이크 등 시스템 매뉴얼 밖의 위기에서 조종사의 기지</span>
+                </div>
+                <div class="arg-point-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  <span><strong>천문 사례:</strong> 수치 속에 숨겨진 새로운 물리법칙에 대한 착안, 가설 수립 및 연구 패러다임 전환</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Consensus & Remaining Issues (Table Data) -->
+          <div class="consensus-box">
+            <div class="result-item consensus">
+              <div class="result-item-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                토론 결과: 모둠원 합의한 점
+              </div>
+              <p>
+                "과학기술은 인간의 제약을 보충하고, 연구 및 업무의 정확도와 효율을 향상하는 주요한 역할을 수행한다."
+              </p>
+            </div>
+
+            <div class="result-item remaining">
+              <div class="result-item-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                토론 결과: 남은 쟁점
+              </div>
+              <p>
+                "기술이 고도화될지라도 예측 불가능한 돌발 결함 상황에서의 최종 판단 권한과 법적·윤리적 책임 소재를 누구에게 둘 것인가에 대한 사회적 합의가 여전히 필요하다."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         Section 5: 👥 개인별 성찰 (Members Reflections)
+         ========================================================= -->
+    <section id="members" class="section" data-category="members all">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag members">Personal Growth & Reflection</span>
+          <h2 class="section-title">👥 모둠원 3인의 개인별 성찰 및 후속 탐구 계획</h2>
+          <p class="section-subtitle">
+            ⑥ 토론 전후 생각의 변화, 인상 깊은 내용, 그리고 앞으로 이어질 학문적 여정
+          </p>
+        </div>
+
+        <div class="members-grid">
+          <!-- Member 1: Park Ji-oh -->
+          <div class="member-card">
+            <div class="member-header">
+              <div class="member-avatar" style="background: linear-gradient(135deg, #1e40af, #3b82f6);">박</div>
+              <div class="member-meta">
+                <h3>10507 박지오</h3>
+                <span class="member-role-tag">발제 · 기록 · 자료조사</span>
+              </div>
+            </div>
+            <div class="member-catchphrase" style="color: #60a5fa;">
+              "침착한 상황 판단과 의사소통, 위기 현장에서 시민을 지키는 사명감"
+            </div>
+            <div class="member-reflection-text">
+              "평소에도 책을 읽고 감상문을 작성한 경험은 있었지만, 친구들과 같은 책을 읽고 서로 다른 생각을 나누며 토론하는 경험은 처음이어서 더욱 의미 있었다. 『조종사가 들려주는 비행 이야기』를 읽고 토론을 준비하면서 비행 중 난동을 부리는 승객을 승무원이 제압하는 상황에 대해 생각해 보았다. 처음에는 대화와 설득으로 해결하는 것이 바람직하다고 생각했지만, 토론을 통해 한 사람의 행동이 다른 승객들의 안전까지 위협할 수 있다는 점을 알게 되었고, 승무원의 역할과 책임을 새롭게 이해하게 되었다.<br><br>
+              특히 이러한 상황에서 침착하게 판단하고 다른 사람의 안전을 보호하는 모습이 경찰이라는 나의 희망 진로와 연결되어 인상 깊었다. 경찰 역시 예기치 못한 사건 현장에서 상황을 정확하게 파악하고, 시민의 안전을 우선으로 고려하며 문제를 해결해야 한다고 생각했다. 이를 통해 경찰에게는 체력뿐만 아니라 상황 판단력과 의사소통 능력, 책임감도 중요하다는 것을 느꼈다. 또한 『천문학자는 별을 보지 않는다』를 통해 과거 관심을 가졌던 천문학자의 실제 연구 과정도 알아볼 수 있었다."
+            </div>
+            <div class="member-future-box">
+              <div class="future-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                후속 탐구 계획 (Roadmap)
+              </div>
+              <div class="future-desc">
+                실제 기내 난동 사건을 조사하고 승무원과 경찰의 위기 대응 매뉴얼 및 역할을 비교하여 긴급 상황에서 효과적으로 시민의 안전을 지키는 방법을 심층 탐구
+              </div>
+            </div>
+          </div>
+
+          <!-- Member 2: Lee Si-woo -->
+          <div class="member-card" style="border-color: rgba(168, 85, 247, 0.35);">
+            <div class="member-header">
+              <div class="member-avatar" style="background: linear-gradient(135deg, #7c3aed, #a855f7);">이</div>
+              <div class="member-meta">
+                <h3>10711 이시우</h3>
+                <span class="member-role-tag" style="background: rgba(168, 85, 247, 0.15); color: var(--astro-primary);">발제 · 기록 · AI 바이브 코딩</span>
+              </div>
+            </div>
+            <div class="member-catchphrase" style="color: #c084fc;">
+              "단순한 낭만을 넘어선 데이터의 세계, 별의 탄생과 진화를 향한 집요한 끈기"
+            </div>
+            <div class="member-reflection-text">
+              "천문학과 우주에 관심이 많아 관련 책을 읽거나 별을 관찰하는 활동을 해왔지만, 친구들과 같은 책을 읽고 서로 다른 생각을 나누며 토론하는 경험은 처음이어서 더욱 의미 있었다. 『천문학자는 별을 보지 않는다』를 읽으며 천문학자는 단순히 별을 관찰하는 사람이 아니라 관측 자료를 분석하고 우주의 원리를 밝혀내기 위해 끊임없이 연구하는 사람이라는 것을 알게 되었다. 특히 천문학자의 일상과 연구 과정을 통해 우주에 대한 호기심뿐만 아니라 오랜 시간 탐구를 이어가는 끈기와 관찰력이 중요하다는 점이 인상 깊었다.<br><br>
+              『조종사가 들려주는 비행 이야기』에서는 비행기가 높은 고도에서 운항하며 별과 하늘을 마주하는 환경에 관심을 가지게 되었고, 항공과 천문학이 하늘이라는 공통된 공간을 연구하고 이해한다는 점에서 흥미를 느꼈다. 두 책을 읽고 토론하면서 이전에는 단순히 별을 바라보는 것에 그쳤던 관심이 별의 탄생과 진화, 우주의 구조와 같은 과학적인 원리를 알아보고 싶다는 호기심으로 확장되었다."
+            </div>
+            <div class="member-future-box" style="border-color: rgba(168, 85, 247, 0.3);">
+              <div class="future-title" style="color: #c084fc;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                후속 탐구 계획 (Roadmap)
+              </div>
+              <div class="future-desc">
+                별의 색깔과 표면 온도(분광형) 사이의 관계를 조사하고, 별의 질량에 따른 진화 경로와 최종 모습 규명. 실제 천체 관측으로 별의 밝기와 색을 기록하여 과학적 원리와 비교 검증
+              </div>
+            </div>
+          </div>
+
+          <!-- Member 3: Lee Si-heon -->
+          <div class="member-card" style="border-color: rgba(0, 210, 255, 0.35);">
+            <div class="member-header">
+              <div class="member-avatar" style="background: linear-gradient(135deg, #0284c7, #00d2ff);">헌</div>
+              <div class="member-meta">
+                <h3>10712 이시헌</h3>
+                <span class="member-role-tag" style="background: rgba(0, 210, 255, 0.15); color: var(--aero-primary);">발제 · 기록 · 보고서 작성</span>
+              </div>
+            </div>
+            <div class="member-catchphrase" style="color: #38bdf8;">
+              "비행기는 거대한 복합 시스템, 인간과 자동화 기술의 상생을 꿈꾸다"
+            </div>
+            <div class="member-reflection-text">
+              "항공에 관심이 많았던 나로서는 비행기가 어떻게 날 수 있고, 항공기술이 어떤 것인지에 대해서는 많이 궁금했었다. 그러나 친구들과 같은 책을 읽고 서로 다르게 생각한 것을 공유하며 토론하는 것은 처음이었다. 따라서 그 의미가 더 컸다. 『조종사가 들려주는 비행 이야기』를 읽으면서 비행기가 운항하기 위해서는 조종사 한 사람만의 판단뿐만 아니라 여러 가지 항공전문인력의 협조와 철저한 안전관리가 이루어져야 한다는 것을 알게 되었다.<br><br>
+              특히, 비행중에 생길 수 있는 여러가지 상황과 이에 대한 조종사의 판단과정이 인상깊었고, 항공분야에서 전문적인 지식과 책임감이 얼마나 중요한지 깨달았다. 또, 『천문학자는 별을 보지 않는다』를 읽으면서 내가 예전에 관심을 갖고 있었던 천문학자의 연구과정과 일상을 알게 되었고, 이를 통해 책을 보는 시각이 바뀌었다. 두 책을 읽고 토론하면서 나는 비행기가 단지 사람을 이동시키는 교통수단일 뿐만 아니라 수많은 기술과 인력이 모여 만들어진 복합적인 시스템이라는 생각을 하게 되었다."
+            </div>
+            <div class="member-future-box" style="border-color: rgba(0, 210, 255, 0.3);">
+              <div class="future-title" style="color: #38bdf8;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                후속 탐구 계획 (Roadmap)
+              </div>
+              <div class="future-desc">
+                비행기가 날 수 있는 역학 원리와 조종사의 판단 알고리즘, 오토파일럿 및 자동착륙시스템 발전에 따른 조종사의 역할 변화와 미래 인간-기술 협력 모델 탐구
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         Section 6: 📸 활동 사진 및 보고서 메타데이터 (Gallery & Info)
+         ========================================================= -->
+    <section id="gallery" class="section" data-category="all">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag members">Activity Archive</span>
+          <h2 class="section-title">📸 모둠 활동 사진 및 보고서 기록</h2>
+          <p class="section-subtitle">
+            ⑦ 활동 사진 및 학년별 추가 항목과 투명한 탐구 출처
+          </p>
+        </div>
+
+        <div class="gallery-card">
+          <div class="gallery-grid">
+            <!-- Photo Frame with Zoom trigger -->
+            <div class="photo-frame" title="클릭하여 원본 사진 크게 보기">
+              <img src="./assets/activity_photo_web.jpg" alt="책만세 모둠 독서 및 토론 활동 사진" loading="lazy">
+              <div class="photo-zoom-hint">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                클릭하여 확대
+              </div>
+            </div>
+
+            <!-- Metadata info -->
+            <div class="gallery-info">
+              <h3>2026학년도 책만세 최종 기록</h3>
+              <p>
+                《조종사가 들려주는 비행이야기》와 《천문학자는 별을 보지 않는다》 두 권의 책을 중심으로 토론 노트를 작성하고, 각자의 진로 및 관심 분야를 연계하여 진행한 실물 독서 활동 현장입니다.
+              </p>
+
+              <div class="meta-table-box">
+                <div class="meta-row">
+                  <div class="meta-label">학년 · 모둠</div>
+                  <div class="meta-val">1학년 모둠</div>
+                </div>
+                <div class="meta-row">
+                  <div class="meta-label">모둠원</div>
+                  <div class="meta-val">10507 박지오, 10711 이시우, 10712 이시헌</div>
+                </div>
+                <div class="meta-row">
+                  <div class="meta-label">지도교사</div>
+                  <div class="meta-val">이광민 선생님</div>
+                </div>
+                <div class="meta-row">
+                  <div class="meta-label">참고자료 출처</div>
+                  <div class="meta-val">알라딘, 지식백과</div>
+                </div>
+                <div class="meta-row">
+                  <div class="meta-label">생성형 AI 사용</div>
+                  <div class="meta-val">찬반 내용 다듬기, 토론 결과 보완</div>
+                </div>
+                <div class="meta-row">
+                  <div class="meta-label">웹 기술 스택</div>
+                  <div class="meta-val">Node.js · Express · Three.js 3D WebGL · Anime.js (CDN)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal for Zoomed Image -->
+    <div id="photo-modal" class="modal-overlay">
+      <div class="modal-content">
+        <button class="modal-close-btn" aria-label="닫기">&times;</button>
+        <img src="./assets/activity_photo.jpg" alt="활동 원본 사진 (고해상도)">
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div>
+            <div class="footer-brand">2026학년도 책만세 (책으로 만드는 세상) 최종 보고서</div>
+            <p style="margin-top: 6px; font-size: 0.85rem;">하늘에서 우주로 (Sky to Cosmos) — 1학년 박지오 · 이시우 · 이시헌</p>
+          </div>
+          <div class="footer-credits">
+            <p>지도교사: 이광민 선생님</p>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 4px;">출처: 《조종사가 들려주는 비행이야기》 & 《천문학자는 별을 보지 않는다》</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          &copy; 2026 책만세 모둠. All Rights Reserved. Powered by Three.js & Anime.js CDN.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
